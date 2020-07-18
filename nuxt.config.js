@@ -2,6 +2,7 @@
 module.exports = {
   mode: 'spa',
   target: 'static',
+  components: true,
   /*
   ** Headers of the page
   */
@@ -36,6 +37,7 @@ module.exports = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxt/components'
   ],
   /*
   ** Nuxt.js modules
