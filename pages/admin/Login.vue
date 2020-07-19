@@ -32,14 +32,10 @@
             </div>
           </div>
 
-          <div class="mt-6 flex items-center justify-between">
-            <div class="text-sm leading-5">
-              <a
-                href="#"
-                class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
-              >Esqueceu sua senha?</a>
-            </div>
-          </div>
+          <AppAlert v-if="message" type="error" class="mt-6">
+            <template v-slot:header>Ops!</template>
+            <template>{{ message }}</template>
+          </AppAlert>
 
           <div class="mt-6">
             <span class="block w-full rounded-md shadow-sm">
@@ -95,7 +91,7 @@ export default {
       });
 
       if (response.success) {
-        this.$router.push("/gerenciador/painel");
+        this.$router.push("/admin/Panel");
       } else {
         this.message = response.content;
       }
@@ -105,5 +101,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss"></style>
