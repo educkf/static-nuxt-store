@@ -1,9 +1,9 @@
 <template>
   <button
     @click="clicked"
-    class="font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline select-none"
-    :class="color"
     :type="type"
+    class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+    :class="color"
   >
     <span v-if="!loading">
       <slot></slot>
@@ -19,8 +19,7 @@ export default {
       required: false
     },
     color: {
-      required: false,
-      default: "bg-blue-500 hover:bg-blue-700 text-white"
+      required: false
     },
     loading: {
       required: true
