@@ -1,6 +1,5 @@
 
 module.exports = {
-  mode: 'spa',
   target: 'static',
   components: true,
   /*
@@ -65,5 +64,10 @@ module.exports = {
     */
     extend(config, ctx) {
     }
+  },
+  generate: {
+    exclude: [
+      /^\/admin/ // path starts with /admin
+    ]
   }
 }

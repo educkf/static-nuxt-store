@@ -4,17 +4,17 @@
       <div>
         <h2
           class="text-4xl leading-9 tracking-tight font-extrabold text-gray-900 sm:text-4xl sm:leading-10"
-        >{{ post.title }}</h2>
+        >{{ post.fields.title.stringValue }}</h2>
         <div class="mt-3 sm:mt-4 lg:grid lg:grid-cols-2 lg:gap-5 lg:items-center">
           <p
             class="text-xl leading-7 text-gray-500"
-          >{{ toDate(post._createDate, "DD/MM/YYYY hh:mm:ss")}}</p>
+          >{{ toDate(post.fields._createDate.stringValue, "DD/MM/YYYY hh:mm:ss")}}</p>
         </div>
       </div>
       <div
         class="mt-6 grid gap-16 border-t-2 border-gray-100 pt-10 lg:grid-cols-2 lg:col-gap-5 lg:row-gap-12"
       >
-        <article class="prose lg:prose-xl" v-html="post.content"></article>
+        <article class="prose lg:prose-xl" v-html="post.fields.content.stringValue"></article>
       </div>
     </div>
   </div>
@@ -39,7 +39,25 @@ export default {
     };
   },
   async fetch({ store, params }) {},
-  async asyncData({ store, params, error }) {
+  async asyncData({ $axios, store, params, error }) {
+    try {
+      const post = await $axios.$get(
+        process.env.FIRESTORE_URL + "Blog/" + params.id
+      );
+      if (post) {
+        return {
+          post
+        };
+      }
+    } catch (err) {
+      return {
+        post: {
+          title: "",
+          content: "",
+          _createDate: ""
+        }
+      };
+    }
     const post = await store.dispatch("BlogStore/single", params.id);
     return { post };
   },
@@ -51,11 +69,6 @@ export default {
     toDate(date, format) {
       return dayjs(date).format(format);
     }
-  },
-  head() {
-    return {
-      title: this.post.title
-    };
   }
 };
 </script>

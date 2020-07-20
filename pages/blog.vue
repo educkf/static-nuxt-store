@@ -12,16 +12,18 @@
       <div
         class="mt-6 grid gap-16 border-t-2 border-gray-100 pt-10 lg:grid-cols-2 lg:col-gap-5 lg:row-gap-12"
       >
-        <div v-for="post in list" :key="post._id">
+        <div v-for="post in list" :key="post.fields._id.stringValue">
           <p class="text-sm leading-5 text-gray-500">
             <time
-              :datetime="toDate(post._createDate, 'YYYY-MM-DD')"
-            >{{ toDate(post._createDate, "DD/MM/YYYY hh:mm:ss") }}</time>
+              :datetime="toDate(post.fields._createDate.stringValue, 'YYYY-MM-DD')"
+            >{{ toDate(post.fields._createDate.stringValue, "DD/MM/YYYY hh:mm:ss") }}</time>
           </p>
-          <h3 class="mt-2 text-xl leading-7 font-semibold text-gray-900">{{ post.title }}</h3>
+          <h3
+            class="mt-2 text-xl leading-7 font-semibold text-gray-900"
+          >{{ post.fields.title.stringValue }}</h3>
           <div class="mt-3">
             <nuxt-link
-              :to="`/posts/${post._id}`"
+              :to="`/posts/${post.fields._id.stringValue}`"
               class="text-base leading-6 font-semibold text-indigo-600 hover:text-indigo-500 transition ease-in-out duration-150"
             >Leia mais</nuxt-link>
           </div>
@@ -32,7 +34,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import dayjs from "dayjs";
 
 export default {
@@ -42,23 +43,26 @@ export default {
   filters: {},
   props: {},
   data: function() {
-    return {};
+    return {
+      list: []
+    };
   },
-  async fetch({ store, params }) {
-    await store.dispatch("BlogStore/list");
+  async fetch({ store, params }) {},
+  async asyncData({ params, error, $axios }) {
+    try {
+      const list = await $axios.$get(process.env.FIRESTORE_URL + "Blog");
+      if (list && list.documents) {
+        return {
+          list: list.documents
+        };
+      }
+    } catch (err) {
+      return {
+        list: []
+      };
+    }
   },
-  async asyncData({ params, error }) {
-    // You may want to fetch data and render it on the server-side. Nuxt.js adds an asyncData method that lets you handle async operations before setting the component data.
-    // return { project: 'nuxt' }
-  },
-  computed: {
-    ...mapState({
-      list: state => state.BlogStore.list
-    })
-    // ...mapGetters({
-    //   item: "namespace/item"
-    // })
-  },
+  computed: {},
   watch: {},
   async created() {},
   async mounted() {},

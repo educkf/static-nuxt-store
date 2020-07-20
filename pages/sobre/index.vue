@@ -22,41 +22,22 @@
 </template>
 
 <script>
-import dayjs from "dayjs";
-
 export default {
-  name: "SingleBlog",
+  name: "AboutPage",
   layout: "default",
   components: {},
   filters: {},
   props: {},
   data: function() {
-    return {
-      post: {
-        title: "",
-        content: "",
-        _createDate: ""
-      }
-    };
+    return {};
   },
   async fetch({ store, params }) {},
-  async asyncData({ store, params, error }) {
-    const post = await store.dispatch("BlogStore/single", params.id);
-    return { post };
-  },
+  async asyncData({ store, params, error }) {},
   computed: {},
   watch: {},
   async created() {},
   async mounted() {},
-  methods: {
-    toDate(date, format) {
-      return dayjs(date).format(format);
-    }
-  },
-  head() {
-    return {
-      title: this.post.title
-    };
-  }
+  methods: {},
+  head() {}
 };
 </script>

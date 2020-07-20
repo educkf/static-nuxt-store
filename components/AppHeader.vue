@@ -28,13 +28,12 @@
         <nav class="hidden md:flex space-x-10">
           <nuxt-link
             to="/blog"
-            href="#"
             class="text-base leading-6 font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150"
           >Blog</nuxt-link>
           <nuxt-link
-            to="sobre"
+            to="/sobre"
             class="text-base leading-6 font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150"
-          >Quem Somos</nuxt-link>
+          >Sobre</nuxt-link>
         </nav>
         <!-- <div class="hidden md:flex items-center justify-end space-x-8 md:flex-1 lg:w-0">
           <a
