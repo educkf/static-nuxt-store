@@ -29,6 +29,7 @@
 
 <script>
 //import { mapState, mapGetters  } from 'vuex';
+import { Auth } from "~/services/firebase.js";
 
 export default {
   name: "BaseAdmin",
@@ -49,7 +50,13 @@ export default {
   },
   computed: {},
   watch: {},
-  async created() {},
+  async created() {
+    Auth.onAuthStateChanged(user => {
+      if (!user) {
+        this.$router.push("/admin/Login");
+      }
+    });
+  },
   async mounted() {},
   methods: {
     toggleSidebar() {

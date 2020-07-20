@@ -53,6 +53,7 @@
 
 export default {
   name: "Login",
+  layout: "clean",
   filters: {},
   props: {},
   data: function() {

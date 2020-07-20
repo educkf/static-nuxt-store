@@ -25,6 +25,16 @@ export const actions = {
     }
   },
 
+  IsAuth() {
+    Auth.onAuthStateChanged((user) => {
+      if (user) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  },
+
   SignOut() {
     return Auth.signOut().then(() => {
       return true;
