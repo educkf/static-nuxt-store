@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-shrink-0 flex items-center px-4">
+  <nuxt-link to="/admin/Panel" class="flex-shrink-0 flex items-center px-4">
     <h1 class="text-2xl font-semibold text-blue-600">Dashboard</h1>
-  </div>
+  </nuxt-link>
 </template>
 
 <script>
