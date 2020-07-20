@@ -1,13 +1,15 @@
 <template>
-  <div></div>
+  <div class="py-4">
+    <div class="border-4 border-dashed border-gray-200 rounded-lg h-96"></div>
+  </div>
 </template>
 
 <script>
 //import { mapState, mapGetters  } from 'vuex';
 
 export default {
-  name: "",
-  layout: "default",
+  name: "Panel",
+  layout: "admin",
   components: {},
   filters: {},
   props: {},

@@ -11,6 +11,7 @@ export const actions = {
         data.email,
         data.password
       );
+      console.log(Login);
       return {
         success: true,
         content: Login
@@ -24,18 +25,14 @@ export const actions = {
     }
   },
 
-  async SignOut() {
-    try {
-      const signOut = await Auth.signOut();
-      if (signOut) {
-        return true;
-      } else {
-        return false;
-      }
-    } catch (err) {
+  SignOut() {
+    return Auth.signOut().then(() => {
+      return true;
+
+    }).catch(err => {
       console.log("store/User.js SignOut(): ", err);
       return false;
-    }
+    });
   }
 
 }
