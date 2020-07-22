@@ -1,0 +1,32 @@
+language: node_js
+node_js:
+ - lts/*
+
+cache:
+ npm: true
+ directories:
+  - node_modules
+  - ~/.cache
+
+branches:
+ only:
+  - master
+
+install:
+ - npm install
+
+script:
+ - npm run build
+ - npm run export
+
+deploy:
+  provider: pages
+  local_dir: dist
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  on:
+    branch: master
+
+notifications:
+  webhooks: https://www.travisbuddy.com

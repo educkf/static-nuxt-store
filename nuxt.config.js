@@ -1,5 +1,6 @@
 
 module.exports = {
+  mode: process.env.MODE || 'spa',
   target: 'static',
   components: true,
   /*
@@ -66,8 +67,6 @@ module.exports = {
     }
   },
   generate: {
-    exclude: [
-      /^\/admin/ // path starts with /admin
-    ]
+    exclude: process.env.MODE === 'universal' ? [ /^\/admin/ ] : []
   }
 }
