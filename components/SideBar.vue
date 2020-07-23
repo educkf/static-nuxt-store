@@ -110,6 +110,9 @@
             </nuxt-link>
           </nav>
         </div>
+        <div class="p-2">
+          <AppButton :loading="loadingDeploy" type="button" @clicked="deploy()">{{ button_text }}</AppButton>
+        </div>
         <SidebarSignout />
       </div>
     </div>
@@ -130,7 +133,10 @@ export default {
     }
   },
   data: function() {
-    return {};
+    return {
+      loadingDeploy: false,
+      button_text: "Publicar atualizações"
+    };
   },
   computed: {
     // ...mapState({
@@ -143,7 +149,23 @@ export default {
   watch: {},
   async created() {},
   async mounted() {},
-  methods: {}
+  methods: {
+    async deploy() {
+      const response = await this.$store.dispatch('Deploy/deploy');
+      console.log(response);
+      if (response) {
+        this.button_text = "Eba! Publicando!"
+      } else {
+        this.$store.dispatch("Notification/Set", {
+          type: "error",
+          title: "Ops! ",
+          message: "Problemas pra publicar as atualizações. Chama o Edu.",
+          button: "OK",
+          buttonAction: () => this.$store.dispatch("Notification/Clear")
+        });
+      }
+    }
+  }
 };
 </script>
 

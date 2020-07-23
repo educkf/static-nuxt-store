@@ -20,3 +20,16 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## Firebase project file
+
+You need to create a file on root directory named `.firebaserc` with the project name inside:
+
+```
+{
+  "projects": {
+    "default": <project-name>
+  }
+}
+
+```
