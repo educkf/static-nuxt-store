@@ -4,11 +4,15 @@ const routerBase = process.env.ROOT ? {
   }
 } : {}
 
+const isStatic = process.env.MODE === "universal" ? {
+  target: 'static'
+} : {}
+
 
 module.exports = {
   ...routerBase,
+  ...isStatic,
   mode: process.env.MODE || 'spa',
-  target: 'static',
   components: true,
   /*
   ** Headers of the page
