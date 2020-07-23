@@ -4,6 +4,7 @@ import "firebase/firestore";
 import "firebase/storage";
 
 const config = {};
+let setup = false;
 
 try {
   config.apiKey = process.env.API_KEY;
@@ -13,17 +14,19 @@ try {
   config.storageBucket = process.env.STORAGE_BUCKET;
   config.messagingSenderId = process.env.MESSAGING_SENDER_ID;
   config.appId = process.env.APP_ID;
-  
+
+  setup = true;
+
 } catch(err) {
   console.log(err);
 }
 
-!firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
+if (setup) !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
-const firestore = firebase.firestore();
+const auth = setup ? {} : firebase.auth();
+const database = setup ? {} : firebase.firestore();
+const storage = setup ? {} : firebase.storage()
 
-export const Auth = firebase.auth();
-export const Database = firestore;
-export const Storage = firebase.storage();
-export const Firebase = firebase;
-export default firebase;
+export const Auth = auth;
+export const Database = database;
+export const Storage = storage;
