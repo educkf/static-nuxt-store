@@ -1,5 +1,12 @@
+const routerBase = process.env.ROOT ? {
+  router: {
+    base: '/' + process.env.ROOT + '/'
+  }
+} : {}
+
 
 module.exports = {
+  ...routerBase,
   mode: process.env.MODE || 'spa',
   target: 'static',
   components: true,
@@ -16,9 +23,6 @@ module.exports = {
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
-  },
-  router: {
-    base: process.env.ROOT
   },
   /*
   ** Customize the progress-bar color
