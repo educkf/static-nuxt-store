@@ -3,15 +3,20 @@ import "firebase/auth";
 import "firebase/firestore";
 import "firebase/storage";
 
-const config = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  databaseURL: process.env.DATABASE_URL,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID
-};
+const config = {};
+
+try {
+  config.apiKey = process.env.API_KEY;
+  config.authDomain = process.env.AUTH_DOMAIN;
+  config.databaseURL = process.env.DATABASE_URL;
+  config.projectId = process.env.PROJECT_ID;
+  config.storageBucket = process.env.STORAGE_BUCKET;
+  config.messagingSenderId = process.env.MESSAGING_SENDER_ID;
+  config.appId = process.env.APP_ID;
+  
+} catch(err) {
+  console.log(err);
+}
 
 !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
