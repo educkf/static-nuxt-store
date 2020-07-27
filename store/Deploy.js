@@ -1,5 +1,4 @@
 import Axios from 'axios';
-import { Auth } from "~/services/firebase";
 
 export const state = () => ({
   list: []
@@ -11,9 +10,7 @@ export const actions = {
   async deploy() {
     try {
 
-      const token = await Auth.currentUser.getIdToken();
-
-      console.log(token)
+      const token = await this.$Auth.currentUser.getIdToken();
 
       const config = {
         headers: {

@@ -1,5 +1,3 @@
-import { Auth } from "~/services/firebase.js";
-
 export const state = () => ({})
 
 export const mutations = {}
@@ -7,7 +5,7 @@ export const mutations = {}
 export const actions = {
   async Login(_, data) {
     try {
-      const Login = await Auth.signInWithEmailAndPassword(
+      const Login = await this.$Auth.signInWithEmailAndPassword(
         data.email,
         data.password
       );
@@ -26,7 +24,7 @@ export const actions = {
   },
 
   IsAuth() {
-    Auth.onAuthStateChanged((user) => {
+    this.$Auth.onAuthStateChanged((user) => {
       if (user) {
         return true;
       } else {
@@ -36,7 +34,7 @@ export const actions = {
   },
 
   SignOut() {
-    return Auth.signOut().then(() => {
+    return this.$Auth.signOut().then(() => {
       return true;
 
     }).catch(err => {

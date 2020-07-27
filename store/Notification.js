@@ -1,5 +1,3 @@
-import { Auth } from "~/services/firebase.js";
-
 export const state = () => ({
   icon: null,
   type: null,
