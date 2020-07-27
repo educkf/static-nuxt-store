@@ -50,7 +50,7 @@ export default {
   async fetch({ store, params }) {},
   async asyncData({ params, error, $axios }) {
     try {
-      const list = await $axios.$get(process.env.FIRESTORE_URL + "Blog");
+      const list = await $axios.$get(process.env.firestoreUrl + "Blog");
       if (list && list.documents) {
         return {
           list: list.documents

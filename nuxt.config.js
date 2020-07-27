@@ -28,6 +28,17 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+
+  env: {
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    databaseUrl: process.env.DATABASE_URL,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    firestoreUrl: process.env.FIRESTORE_URL
+  },
   /*
   ** Customize the progress-bar color
   */
@@ -50,7 +61,8 @@ module.exports = {
   buildModules: [
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxt/components'
+    '@nuxt/components',
+    ['@nuxtjs/dotenv', { systemvars: true }]
   ],
   /*
   ** Nuxt.js modules
