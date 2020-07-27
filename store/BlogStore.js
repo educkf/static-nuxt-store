@@ -13,7 +13,7 @@ export const mutations = {
 export const actions = {
   async list({ commit }) {
     try {
-      const response = await BlogApi.list();
+      const response = await BlogApi.list(this.$Database);
       commit("SET_LIST", response);
 
       return response;
@@ -24,7 +24,7 @@ export const actions = {
 
   async single(_, postId) {
     try {
-      const response = await BlogApi.get(postId);
+      const response = await BlogApi.get(this.$Database, postId);
       return response;
 
     } catch (err) {
@@ -34,7 +34,7 @@ export const actions = {
 
   async add({ dispatch }, postData) {
     try {
-      const response = await BlogApi.add(postData);
+      const response = await BlogApi.add(this.$Database, postData);
       if (response._status) {
         await dispatch("list");
       }
@@ -47,7 +47,7 @@ export const actions = {
 
   async update({ dispatch }, postData) {
     try {
-      const response = await BlogApi.update(postData);
+      const response = await BlogApi.update(this.$Database, postData);
       if (response._status) {
         await dispatch("list");
       }
@@ -60,7 +60,7 @@ export const actions = {
 
   async remove({ dispatch }, _postId) {
     try {
-      const response = await BlogApi.remove(_postId);
+      const response = await BlogApi.remove(this.$Database, _postId);
       if (response._status) {
         await dispatch("list");
       }
