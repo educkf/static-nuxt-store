@@ -1,4 +1,4 @@
-import { Database } from "~/services/firebase";
+import { Database } from "~/plugins/firebase";
 import dayjs from "dayjs";
 
 export default {
