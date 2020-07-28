@@ -1,3 +1,4 @@
+import { Auth } from "~/services/firebase";
 import Axios from 'axios';
 
 export const state = () => ({
@@ -10,7 +11,7 @@ export const actions = {
   async deploy() {
     try {
 
-      const token = await this.$Auth.currentUser.getIdToken();
+      const token = await Auth.currentUser.getIdToken();
 
       const config = {
         headers: {
@@ -18,7 +19,7 @@ export const actions = {
         }
       }
 
-      const response = await Axios.get(`${process.env.DEPLOY_URL}`, config);
+      const response = await Axios.get(`${(process.env.deployUrl || process.env.DEPLOY_URL)}`, config);
 
       if (response) {
         return response

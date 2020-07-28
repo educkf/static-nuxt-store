@@ -42,7 +42,7 @@ export default {
   async asyncData({ $axios, store, params, error }) {
     try {
       const post = await $axios.$get(
-        process.env.firestoreUrl + "Blog/" + params.id
+        (process.env.firestoreUrl || process.env.FIRESTORE_URL) + "Blog/" + params.id
       );
       if (post) {
         return {

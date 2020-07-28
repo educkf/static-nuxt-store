@@ -37,7 +37,8 @@ module.exports = {
     storageBucket: process.env.STORAGE_BUCKET,
     messagingSenderId: process.env.MESSAGING_SENDER_ID,
     appId: process.env.APP_ID,
-    firestoreUrl: process.env.FIRESTORE_URL
+    firestoreUrl: process.env.FIRESTORE_URL,
+    deployUrl: process.env.DEPLOY_URL
   },
   /*
   ** Customize the progress-bar color
@@ -52,9 +53,7 @@ module.exports = {
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-    '~/plugins/firebase.js'
-  ],
+  plugins: [],
   /*
   ** Nuxt.js dev-modules
   */

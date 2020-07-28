@@ -1,7 +1,8 @@
+import { Database } from "~/services/firebase";
 import dayjs from "dayjs";
 
 export default {
-  async list(Database) {
+  async list() {
     try {
       const querySnapshot = await Database
         .collection("Blog")
@@ -24,7 +25,7 @@ export default {
     }
   },
 
-  async get(Database, docId) {
+  async get(docId) {
     try {
       const doc = await Database.collection("Blog")
         .doc(docId)
@@ -49,7 +50,7 @@ export default {
     }
   },
 
-  async add(Database, data) {
+  async add(data) {
     try {
       const docRef = await Database.collection("Blog").doc();
       docRef.set({
@@ -69,7 +70,7 @@ export default {
     }
   },
 
-  async update(Database, data) {
+  async update(data) {
     try {
       const docRef = await Database.collection("Blog").doc(data._id);
       docRef.set({
@@ -88,7 +89,7 @@ export default {
     }
   },
 
-  async remove(Database, docId) {
+  async remove(docId) {
     try {
       await Database.collection("Blog")
         .doc(docId)
