@@ -44,7 +44,9 @@ export default {
     };
   },
   async fetch({ store, params }) {},
-  async asyncData({ $axios, params, error }) {
+  async asyncData({ store, $axios, params, error }) {
+    await store.dispatch('CollectionStore/setupCollections');
+
     try {
       const content = await $axios.$get(
         (process.env.firestoreUrl || process.env.FIRESTORE_URL) + params.Collection + "/" + params.id
