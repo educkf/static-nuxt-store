@@ -1,16 +1,16 @@
 <template>
-  <div class="pt-2 pb-6 md:py-6">
+  <div v-if="collection" class="pt-2 pb-6 md:py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-8">
-      <h1 class="text-2xl font-semibold text-gray-900">{{ isNew ? "Nova" : "Editando"}} Postagem</h1>
+      <h1 class="text-2xl font-semibold text-gray-900">{{ isNew ? "Adicionar" : "Editando"}} {{ collection.single }}</h1>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
       <!-- MainContent -->
-      <form @submit.prevent="savePost()">
+      <form @submit.prevent="saveContent()">
         <div>
           <div>
             <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
-              <div class="sm:col-span-6">
+              <!-- <div class="sm:col-span-6">
                 <label
                   for="post_title"
                   class="block text-sm font-medium leading-5 text-gray-700"
@@ -40,7 +40,7 @@
                 <p
                   class="mt-2 text-sm text-gray-500"
                 >Seja original, não saia copiando e colando, é feio.</p>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-//import { mapState, mapGetters  } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: "BlogEdit",
@@ -70,60 +70,64 @@ export default {
     return {
       isNew: true,
       loading: false,
-      post: {
-        title: "",
-        content: ""
-      }
+      content: {}
     };
   },
-  async fetch({ store, params }) {
-    // The fetch method is used to fill the store before rendering the page, it's like the asyncData method except it doesn't set the component data
-  },
-  async asyncData({ params, store, error }) {
+  async fetch() {},
+  async asyncData({ params, store }) {
     if (params.id !== "New") {
-      const post = await store.dispatch("BlogStore/single", params.id);
+      const content = await store.dispatch("CollectionStore/single", [params.Collection, params.id]);
 
       return {
         isNew: false,
-        post: post
+        content: content
       };
     } else {
       return {
         isNew: true,
-        post: {
-          title: "",
-          content: ""
-        }
+        content: {}
       };
     }
   },
   computed: {
-    // ...mapState({
-    //   item: state => state.namespace.item
-    // }),
-    // ...mapGetters({
-    //   item: "namespace/item"
-    // })
+    ...mapState({
+      collections: state => state.CollectionStore.collections
+    }),
+
+    collection() {
+      if (this.collections.length > 0) return this.collections.find(item => item.name === this.$route.params.Collection);
+      else return null;
+    }
   },
   watch: {},
-  async created() {},
+  async created() {
+    if (this.collections.length === 0) this.$router.push("/admin/Panel");
+    else {
+      if (this.isNew) {
+        for (let [key, value] of Object.entries(this.collection.default)) {
+          this.$set(this.content, key, value);
+        }
+      }
+    }
+  },
   async mounted() {},
   methods: {
-    async savePost() {
+    async saveContent() {
       this.loading = true;
       let response;
 
       if (this.isNew)
-        response = await this.$store.dispatch("BlogStore/add", this.post);
-      else response = await this.$store.dispatch("BlogStore/update", this.post);
+        response = await this.$store.dispatch("CollectionStore/add", [this.collection.name, this.content]);
+      else response = await this.$store.dispatch("CollectionStore/update", [this.collection.name, this.content]);
 
       if (response._status) {
-        this.$router.push("/admin/Blog");
+        this.$router.push(`/admin/${this.collection.name}`);
+
       } else {
         this.$store.dispatch("Notification/Set", {
           type: "error",
-          title: "Problemas ao salvar seu post",
-          message: "Não conseguimos salvar seu post.",
+          title: `Problemas ao salvar seu ${this.collection.single}`,
+          message: `Não conseguimos salvar seu ${this.collection.single}.`,
           button: "OK",
           buttonAction: () => this.$store.dispatch("Notification/Clear")
         });
@@ -133,7 +137,7 @@ export default {
   },
   head() {
     return {
-      title: "Edição de Post"
+      title: this.collection ? "Edição de " + this.collection.single : "Aguarde..."
     };
   }
 };

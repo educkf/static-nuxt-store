@@ -2,9 +2,9 @@ import { Database } from "~/services/firebase";
 import dayjs from "dayjs";
 
 export default {
-  async list() {
+  async list(collectionName) {
     try {
-      const querySnapshot = await Database.collection("collectionName").get();
+      const querySnapshot = await Database.collection(collectionName).get();
       const list = [];
       querySnapshot.forEach(function (doc) {
         const docObj = {
@@ -22,9 +22,9 @@ export default {
     }
   },
 
-  async get(docId) {
+  async get(collectionName, docId) {
     try {
-      const doc = await Database.collection("collectionName")
+      const doc = await Database.collection(collectionName)
         .doc(docId)
         .get();
       if (doc.exists)
@@ -47,9 +47,9 @@ export default {
     }
   },
 
-  async add(data) {
+  async add(collectionName, data) {
     try {
-      const docRef = await Database.collection("collectionName").doc();
+      const docRef = await Database.collection(collectionName).doc();
       docRef.set({
         _id: docRef.id,
         _createDate: dayjs().format(),
@@ -67,9 +67,9 @@ export default {
     }
   },
 
-  async update(data) {
+  async update(collectionName, data) {
     try {
-      const docRef = await Database.collection("collectionName").doc(data._id);
+      const docRef = await Database.collection(collectionName).doc(data._id);
       docRef.set({
         _updateDate: dayjs().format(),
         ...data
@@ -86,9 +86,9 @@ export default {
     }
   },
 
-  async remove(docId) {
+  async remove(collectionName, docId) {
     try {
-      await Database.collection("collectionName")
+      await Database.collection(collectionName)
         .doc(docId)
         .delete();
       return {
