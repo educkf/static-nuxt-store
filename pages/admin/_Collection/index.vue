@@ -27,7 +27,7 @@
         <ul>
           <li v-for="item in list" :key="item._id">
             <nuxt-link
-              :to="`/admin/Blog/${item._id}`"
+              :to="`/admin/${collection.name}/${item._id}`"
               class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
             >
               <div class="px-4 py-4 flex items-center sm:px-6">
@@ -111,6 +111,7 @@ export default {
   watch: {},
   async created() {
     if (this.collections.length === 0) this.$router.push("/admin/Panel");
+    else this.$store.dispatch('CollectionStore/list', [this.collection.name])
   },
   async mounted() {},
   methods: {

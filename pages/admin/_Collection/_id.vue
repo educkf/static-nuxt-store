@@ -10,37 +10,13 @@
         <div>
           <div>
             <div class="mt-6 grid grid-cols-1 row-gap-6 col-gap-4 sm:grid-cols-6">
-              <!-- <div class="sm:col-span-6">
-                <label
-                  for="post_title"
-                  class="block text-sm font-medium leading-5 text-gray-700"
-                >Título da postagem</label>
-                <div class="mt-1 rounded-md shadow-sm">
-                  <input
-                    id="post_title"
-                    v-model="post.title"
-                    class="form-input block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                  />
-                </div>
-              </div>
-
-              <div class="sm:col-span-6">
-                <label
-                  for="post-content"
-                  class="block text-sm font-medium leading-5 text-gray-700"
-                >Conteúdo</label>
-                <div class="mt-1 rounded-md shadow-sm">
-                  <textarea
-                    id="post-content"
-                    v-model="post.content"
-                    rows="3"
-                    class="form-textarea block w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5"
-                  ></textarea>
-                </div>
-                <p
-                  class="mt-2 text-sm text-gray-500"
-                >Seja original, não saia copiando e colando, é feio.</p>
-              </div> -->
+              <FormField 
+                v-for="(value, name) in collection.schema" 
+                :key="name"
+                :name="name"
+                :schema="value"
+                v-model="content[name]"
+              />
             </div>
           </div>
         </div>
@@ -63,7 +39,6 @@ import { mapState } from 'vuex';
 export default {
   name: "BlogEdit",
   layout: "admin",
-  components: {},
   filters: {},
   props: {},
   data: function() {

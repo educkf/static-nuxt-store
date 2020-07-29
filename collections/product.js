@@ -4,7 +4,7 @@ export default {
   single: "Produto",
   
   schema: {
-    name: {
+    title: {
       name: "Título",
       type: "shortString"
     },
@@ -23,7 +23,7 @@ export default {
   },
 
   default: {
-    name: "",
+    title: "",
     price: 0,
     code: "",
     description: ""
