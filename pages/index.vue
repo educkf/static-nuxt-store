@@ -40,7 +40,9 @@ export default {
     return {};
   },
   async fetch({ store, params }) {},
-  async asyncData({ params, error }) {},
+  async asyncData({ store }) {
+    await store.dispatch('CollectionStore/setupCollections');
+  },
   computed: {},
   watch: {},
   async created() {},

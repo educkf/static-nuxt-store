@@ -15,12 +15,8 @@ export default {
   data: function() {
     return {};
   },
-
-  async fetch() {},
-  async asyncData() {},
   computed: {},
   watch: {},
-
   async mounted() {
     await this.$store.dispatch('CollectionStore/setupCollections');
   },
