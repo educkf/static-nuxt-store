@@ -9,10 +9,9 @@ export const state = () => ({
 export const mutations = {
   SET_COLLECTION(state, payload) {
     const index = state.collections.findIndex(collection => collection.name === payload.name);
-
     if (index < 0) {
       state.collections = [...state.collections, payload];
-
+      
       // Vue.set the new collection list, so it be reactive
       Vue.set(state, payload.name, []);
     }
@@ -28,7 +27,7 @@ export const actions = {
     // reference: https://stackoverflow.com/questions/54095215/how-to-get-all-the-image-files-in-a-directory-using-vue-js-nuxt-js
     // webpack method require.context to the files refs of a folder
 
-    const collectionsRef = require.context('~/collections/', true, /\.js$/);
+    const collectionsRef = require.context('../collections/', true, /\.js$/);
     const collections = collectionsRef.keys();
     
     for(const collection of collections) {

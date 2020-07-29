@@ -57,7 +57,7 @@ export default {
   },
 
   async mounted() {
-    this.$store.dispatch('CollectionStore/setupCollections');
+    await this.$store.dispatch('CollectionStore/setupCollections');
   },
 
   methods: {

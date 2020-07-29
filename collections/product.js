@@ -2,6 +2,7 @@ export default {
   name: "Products",
   label: "Produtos",
   single: "Produto",
+  description: "Produtos pra vc coprá",
   
   schema: {
     title: {

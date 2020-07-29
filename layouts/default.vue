@@ -22,7 +22,7 @@ export default {
   watch: {},
 
   async mounted() {
-    this.$store.dispatch('CollectionStore/setupCollections');
+    await this.$store.dispatch('CollectionStore/setupCollections');
   },
 };
 </script>
