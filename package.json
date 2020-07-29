@@ -26,6 +26,7 @@
     "nuxt": "^2.14.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.10.4",
     "@nuxt/components": "^1.0.7",
     "@nuxtjs/tailwindcss": "^1.0.0",
     "nodemon": "^1.18.9"

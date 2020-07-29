@@ -14,9 +14,11 @@ module.exports = {
   ...isStatic,
   mode: process.env.MODE || 'spa',
   components: true,
-  /*
-  ** Headers of the page
-  */
+  server: {
+    port: 3333, // default: 3000
+    host: 'localhost' // default: localhost
+  },
+
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -40,55 +42,40 @@ module.exports = {
     firestoreUrl: process.env.FIRESTORE_URL,
     deployUrl: process.env.DEPLOY_URL
   },
-  /*
-  ** Customize the progress-bar color
-  */
+
   loading: { color: '#fff' },
-  /*
-  ** Global CSS
-  */
+
   css: [
     '@assets/css/inter.css'
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
+
   plugins: [],
-  /*
-  ** Nuxt.js dev-modules
-  */
+
   buildModules: [
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
     '@nuxt/components',
     ['@nuxtjs/dotenv', { systemvars: true }]
   ],
-  /*
-  ** Nuxt.js modules
-  */
+
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
+
   axios: {
   },
-  /*
-  ** Build configuration
-  */
+
   build: {
-    /*
-    ** You can extend webpack config here
-    */
-    extend(config, ctx) {
+    extend(config, ctx) {},
+
+    babel: {
+      plugins: [
+        '@babel/plugin-proposal-optional-chaining'
+      ]
     }
   },
+  
   generate: {
     exclude: process.env.MODE === 'universal' ? [ /^\/admin/ ] : []
   }

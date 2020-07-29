@@ -4,6 +4,7 @@
     <AppNotification />
 
     <div class="flex flex-col w-0 flex-1 overflow-hidden">
+
       <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
         <button
           @click.prevent="toggleSidebar()"
@@ -20,15 +21,16 @@
           </svg>
         </button>
       </div>
+
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none" tabindex="0">
         <nuxt />
       </main>
+
     </div>
   </div>
 </template>
 
 <script>
-//import { mapState, mapGetters  } from 'vuex';
 import { Auth } from "~/services/firebase";
 
 export default {
@@ -36,28 +38,28 @@ export default {
   components: {},
   filters: {},
   props: {},
+
   data: function() {
     return {
       showSidebar: false
     };
   },
-  async fetch({ store, params }) {
-    // The fetch method is used to fill the store before rendering the page, it's like the asyncData method except it doesn't set the component data
-  },
-  async asyncData({ params, error }) {
-    // You may want to fetch data and render it on the server-side. Nuxt.js adds an asyncData method that lets you handle async operations before setting the component data.
-    // return { project: 'nuxt' }
-  },
+
+  async fetch() {},
+  async asyncData() {},
   computed: {},
   watch: {},
+
   async created() {
     Auth.onAuthStateChanged(user => {
-      if (!user) {
-        this.$router.push("/admin/Login");
-      }
+      if (!user) this.$router.push("/admin/Login");
     });
   },
-  async mounted() {},
+
+  async mounted() {
+    await this.$store.dispatch('CollectionStore/setupCollections');
+  },
+
   methods: {
     toggleSidebar() {
       this.showSidebar = !this.showSidebar;

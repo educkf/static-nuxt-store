@@ -1,7 +1,7 @@
 <template>
-  <div class="pt-2 pb-6 md:py-6">
+  <div v-if="collection" class="pt-2 pb-6 md:py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-8">
-      <h1 class="text-2xl font-semibold text-gray-900">Blog</h1>
+      <h1 class="text-2xl font-semibold text-gray-900">{{ collection.label }}</h1>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
@@ -9,15 +9,15 @@
       <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
         <div class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-no-wrap">
           <div class="ml-4 mt-2">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Seus posts</h3>
+            <h3 class="text-lg leading-6 font-medium text-gray-900">Seus {{ collection.label }}</h3>
           </div>
           <div class="ml-4 mt-2 flex-shrink-0">
             <span class="inline-flex rounded-md shadow-sm">
               <nuxt-link
-                to="/admin/Blog/New"
+                :to="`/admin/${collection.name}/New`"
                 type="button"
                 class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700"
-              >Criar nova postagem</nuxt-link>
+              >Criar novo</nuxt-link>
             </span>
           </div>
         </div>
@@ -27,7 +27,7 @@
         <ul>
           <li v-for="item in list" :key="item._id">
             <nuxt-link
-              :to="`/admin/Blog/${item._id}`"
+              :to="`/admin/${collection.name}/${item._id}`"
               class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50 transition duration-150 ease-in-out"
             >
               <div class="px-4 py-4 flex items-center sm:px-6">
@@ -96,14 +96,23 @@ export default {
   },
   computed: {
     ...mapState({
-      list: state => state.BlogStore.list
-    })
-    // ...mapGetters({
-    //   item: "namespace/item"
-    // })
+      collections: state => state.CollectionStore.collections
+    }),
+
+    collection() {
+      if (this.collections.length > 0) return this.collections.find(item => item.name === this.$route.params.Collection);
+      else return null;
+    },
+
+    list() {
+      return this.$store.state.CollectionStore[this.collection.name]
+    }
   },
   watch: {},
-  async created() {},
+  async created() {
+    if (this.collections.length === 0) this.$router.push("/admin/Panel");
+    else this.$store.dispatch('CollectionStore/list', [this.collection.name])
+  },
   async mounted() {},
   methods: {
     toDate(date) {
@@ -112,7 +121,7 @@ export default {
   },
   head() {
     return {
-      title: "Blog"
+      title: this.collection ? this.collection.label : "Aguarde..."
     };
   }
 };

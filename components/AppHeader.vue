@@ -30,6 +30,14 @@
             to="/blog"
             class="text-base leading-6 font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150"
           >Blog</nuxt-link>
+
+          <nuxt-link
+            v-for="collection in collections"
+            :key="collection.name"
+            :to="`/${collection.name}`"
+            class="text-base leading-6 font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150"
+          >{{ collection.label }}</nuxt-link>
+
           <nuxt-link
             to="/sobre"
             class="text-base leading-6 font-medium text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900 transition ease-in-out duration-150"
@@ -99,6 +107,14 @@
                 to="/blog"
                 class="text-base leading-6 font-medium text-gray-900 hover:text-gray-700 transition ease-in-out duration-150"
               >Blog</nuxt-link>
+
+              <nuxt-link
+                v-for="collection in collections"
+                :key="collection.name"
+                :to="`/${collection.name}`"
+                class="text-base leading-6 font-medium text-gray-900 hover:text-gray-700 transition ease-in-out duration-150"
+              >{{ collection.label }}</nuxt-link>
+
               <nuxt-link
                 to="/sobre"
                 class="text-base leading-6 font-medium text-gray-900 hover:text-gray-700 transition ease-in-out duration-150"
@@ -127,7 +143,7 @@
 </template>
 
 <script>
-//import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   name: "AppHeader",
@@ -140,9 +156,9 @@ export default {
     };
   },
   computed: {
-    // ...mapState({
-    //   item: state => state.namespace.item
-    // }),
+    ...mapState({
+      collections: state => state.CollectionStore.collections
+    }),
     // ...mapGetters({
     //   item: "namespace/item"
     // })
